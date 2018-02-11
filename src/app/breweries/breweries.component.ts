@@ -10,15 +10,15 @@ import { ViewContainerRef } from '@angular/core';
   styleUrls: ['./breweries.component.css']
 })
 export class BreweriesComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'description', 'year'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns = ['name', 'established', 'statusDisplay'];
+  //dataSource = ELEMENT_DATA;
 
-  beers;
+  breweries = [];
 
   errorReceived;
   config;
   errorSubscription: Subscription;
-  beersSubscription: Subscription;
+  breweriesSubscription: Subscription;
 
   constructor(
     private _service: BreweryService,
@@ -30,18 +30,48 @@ export class BreweriesComponent implements OnInit {
     this._service.errorEmitter.subscribe(error => {
       this.errorHandler(error);
     })
+
     this.config = new MatSnackBarConfig();
     this.config.duration = 5000;
     this.config.horizontalPosition = 'center';
     this.config.verticalPosition = 'bottom';
 
-    this.getBeers();
+    //this.getBeers();
+
+    //temporary data
+    this.breweries = [
+      {
+        name: 'name 1',
+        established: 'established 1',
+        statusDisplay: 'statusDisplay 1'
+      },
+      {
+        name: 'name 12',
+        established: 'established 2',
+        statusDisplay: 'statusDisplay 2'
+      },
+      {
+        name: 'name 3',
+        established: 'established 3',
+        statusDisplay: 'statusDisplay 3'
+      },
+      {
+        name: 'name 4',
+        established: 'established 4',
+        statusDisplay: 'statusDisplay 4'
+      },
+      {
+        name: 'name 5',
+        established: 'established 5',
+        statusDisplay: 'statusDisplay 5'
+      }
+    ]
   }
 
-  getBeers() {
-    this.beersSubscription = this._service.getBeers().subscribe(data => {
-      this.beers = data;
-      this.beersSubscription.unsubscribe()
+  getBreweries() {
+    this.breweriesSubscription = this._service.getBreweries().subscribe(data => {
+      this.breweries = data;
+      this.breweriesSubscription.unsubscribe()
     })
   }
 
@@ -54,14 +84,13 @@ export class BreweriesComponent implements OnInit {
 
 export interface Element {
   name: string;
-  position: number;
-  description: string;
-  year: number;
+  established: number;
+  statusDisplay: string;
 }
 
-const ELEMENT_DATA: Element[] = [
+//const ELEMENT_DATA: Element[] = [
 
-  { position: 1, name: 'Beer 1', description: 'description 1', year: 2018 },
-  { position: 2, name: 'Beer 2', description: 'description 2', year: 2018 },
-  { position: 3, name: 'Beer 3', description: 'description 3', year: 2017 }
-];
+//  { position: 1, name: 'Beer 1', description: 'description 1', year: 2018 },
+//  { position: 2, name: 'Beer 2', description: 'description 2', year: 2018 },
+//  { position: 3, name: 'Beer 3', description: 'description 3', year: 2017 }
+//];

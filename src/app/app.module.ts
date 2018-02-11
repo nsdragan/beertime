@@ -6,19 +6,21 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { MatButtonModule, MatSnackBarModule, MatTableModule, MatSidenavModule } from '@angular/material';
+import { MatButtonModule, MatSnackBarModule, MatTableModule, MatSidenavModule, MatListModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { BreweriesComponent } from './breweries/breweries.component';
 import { BreweryService } from './services/brewery.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { BeersComponent } from './beers/beers.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     BreweriesComponent,
-    SidenavComponent
+    SidenavComponent,
+    BeersComponent
   ],
   imports: [
     BrowserModule,
@@ -29,13 +31,15 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MatButtonModule,
     MatTableModule,
     MatSidenavModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule
   ],
   exports: [
     MatButtonModule,
     MatTableModule,
     MatSidenavModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule
   ],
   providers: [    
     BreweryService

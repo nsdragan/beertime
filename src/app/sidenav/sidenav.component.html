@@ -1,3 +1,7 @@
-<ul>
-  <li *ngFor="let item of items">{{item.name}}</li>
-</ul>
+<!--<ul>
+  <li *ngFor="let item of items" (click)="categorySelected($event, item.id)">{{item.name}}</li>
+</ul>-->
+
+<mat-list>
+  <mat-list-item *ngFor="let item of items" (click)="categorySelected($event, item.id)">{{item.name}}</mat-list-item>
+</mat-list>
