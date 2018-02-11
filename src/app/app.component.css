@@ -1,0 +1,22 @@
+.sidenavContainer {
+  flex: 1;
+  min-width: 100%;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+}
+.sidenavContent{
+  display:flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav{
+  width: 240px;
+}
+
+/deep/ app-breweries {
+  width: 90%;
+  min-width: 90%;
+}
