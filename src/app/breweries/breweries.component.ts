@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BreweryService } from '../services/brewery.service';
+import { Subscription } from "rxjs/Subscription";
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'app-breweries',
@@ -6,14 +10,47 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./breweries.component.css']
 })
 export class BreweriesComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns = ['position', 'name', 'description', 'year'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+
+  beers;
+
+  errorReceived;
+  config;
+  errorSubscription: Subscription;
+  beersSubscription: Subscription;
+
+  constructor(
+    private _service: BreweryService,
+    private _snackbar: MatSnackBar,
+    public viewContainerRef: ViewContainerRef
+  ) { }
 
   ngOnInit() {
+    this._service.errorEmitter.subscribe(error => {
+      this.errorHandler(error);
+    })
+    this.config = new MatSnackBarConfig();
+    this.config.duration = 5000;
+    this.config.horizontalPosition = 'center';
+    this.config.verticalPosition = 'bottom';
+
+    this.getBeers();
   }
 
+  getBeers() {
+    this.beersSubscription = this._service.getBeers().subscribe(data => {
+      this.beers = data;
+      this.beersSubscription.unsubscribe()
+    })
+  }
+
+  errorHandler(msg) {
+    this._snackbar.open(msg, 'Ok', this.config);
+  }
 }
+
+
 
 export interface Element {
   name: string;
