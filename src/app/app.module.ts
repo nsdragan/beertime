@@ -6,13 +6,17 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { MatButtonModule, MatSnackBarModule, MatTableModule, MatSidenavModule, MatListModule } from '@angular/material';
+import {
+  MatButtonModule, MatSnackBarModule, MatTableModule, MatSidenavModule, MatListModule,
+  MatIconModule, MatInputModule
+} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { BreweriesComponent } from './breweries/breweries.component';
 import { BreweryService } from './services/brewery.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { BeersComponent } from './beers/beers.component';
+import { BeerDetailsComponent } from './beer-details/beer-details.component';
 
 
 @NgModule({
@@ -20,7 +24,8 @@ import { BeersComponent } from './beers/beers.component';
     AppComponent,
     BreweriesComponent,
     SidenavComponent,
-    BeersComponent
+    BeersComponent,
+    BeerDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,14 +37,18 @@ import { BeersComponent } from './beers/beers.component';
     MatTableModule,
     MatSidenavModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    MatIconModule
   ],
   exports: [
     MatButtonModule,
     MatTableModule,
     MatSidenavModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    MatIconModule
   ],
   providers: [    
     BreweryService

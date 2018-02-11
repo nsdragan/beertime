@@ -8,8 +8,20 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
   title = 'Beer time';
+  text = '';
   constructor(private _router: Router){}
   redirect() {
-    this._router.navigate(['/breweries']
+    this._router.navigate(['/breweries']);
+  }
+  search() {
+    console.log('srch');
+    console.log(this.text)
+    if (this.text != '') {
+      this._router.navigate(['/beers/' + this.text])
+    }
+  }
+
+  onKey(event) {
+    this.text = event.target.value;
   }
 }

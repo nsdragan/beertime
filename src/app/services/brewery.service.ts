@@ -31,7 +31,20 @@ export class BreweryService {
       });
   }
 
-  getBeers(categoryId): Observable<string[]> {
+  getBeer(id: number): Observable<string[]> {
+    return this._http.get(this._url + '/beer/:' + id + this._key)
+      .map(data => {
+        return data.json();
+      })
+      .catch(error => {
+        let errMsg = (error.message) ? error.message :
+          error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        this.errorEmitter.emit(errMsg);
+        return Observable.throw(errMsg);
+      });
+  }
+
+  getBeers(categoryId: number): Observable<string[]> {
     return this._http.get(this._url + '/brewery/:' + categoryId + '/beers' + this._key)
       .map(data => {
         this.beersEmitter.emit(data.json());
@@ -42,7 +55,21 @@ export class BreweryService {
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         this.errorEmitter.emit(errMsg);
         console.log(this.router.url);
-        this.router.navigate(['/beers']);
+        this.router.navigate(['/beers']); //temp
+        return Observable.throw(errMsg);
+      });
+  }
+
+  getBeerSearch(text: string): Observable<string[]> {
+    return this._http.get(this._url + '/beers' + this._key + '&name=' + text)
+      .map(data => {
+        this.beersEmitter.emit(data.json());
+      })
+      .catch(error => {
+        let errMsg = (error.message) ? error.message :
+          error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        this.errorEmitter.emit(errMsg);
+        console.log(this.router.url);
         return Observable.throw(errMsg);
       });
   }

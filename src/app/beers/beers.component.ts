@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BreweryService } from '../services/brewery.service';
 import { Subscription } from "rxjs/Subscription";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -14,7 +15,7 @@ export class BeersComponent implements OnInit {
   dataSource = ELEMENT_DATA;
 
   beers;
-
+  text;
   errorReceived;
   config;
   errorSubscription: Subscription;
@@ -23,7 +24,8 @@ export class BeersComponent implements OnInit {
   constructor(
     private _service: BreweryService,
     private _snackbar: MatSnackBar,
-    public viewContainerRef: ViewContainerRef
+    public viewContainerRef: ViewContainerRef,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,13 @@ export class BeersComponent implements OnInit {
     this._service.beersEmitter.subscribe(data => {
       this.beers = data;
     })
+
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.text = params['search'];
+      if (this.text) {
+        this.getBeers();
+      }
+    });
 
     this.config = new MatSnackBarConfig();
     this.config.duration = 5000;
@@ -77,12 +86,12 @@ export class BeersComponent implements OnInit {
     ]
   }
 
-  //getBeers() {
-  //  this.beersSubscription = this._service.getBeers().subscribe(data => {
-  //    this.beers = data;
-  //    this.beersSubscription.unsubscribe()
-  //  })
-  //}
+  getBeers() {
+    this.beersSubscription = this._service.getBeers(this.text).subscribe(data => {
+      this.beers = data;
+      this.beersSubscription.unsubscribe()
+    })
+  }
 
   errorHandler(msg) {
     this._snackbar.open(msg, 'Ok', this.config);

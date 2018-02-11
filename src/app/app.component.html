@@ -1,6 +1,12 @@
 <nav>
   <h2>Beer time</h2>
   <button mat-button (click)="redirect()">Breweries</button>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Search for beer..." (keyup)="onKey($event)">
+    </mat-form-field>
+    <mat-icon style="cursor:pointer" (click)="search()">search</mat-icon>
+  </div>
 </nav>
 
 <mat-sidenav-container class="sidenavContainer">
