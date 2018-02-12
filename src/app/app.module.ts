@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import {
   MatButtonModule, MatSnackBarModule, MatTableModule, MatSidenavModule, MatListModule,
-  MatIconModule, MatInputModule
+  MatIconModule, MatInputModule, MatCardModule, MatSortModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -39,7 +39,9 @@ import { BeerDetailsComponent } from './beer-details/beer-details.component';
     MatSnackBarModule,
     MatListModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatSortModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +50,9 @@ import { BeerDetailsComponent } from './beer-details/beer-details.component';
     MatSnackBarModule,
     MatListModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatSortModule
   ],
   providers: [    
     BreweryService

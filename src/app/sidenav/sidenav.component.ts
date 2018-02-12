@@ -15,25 +15,26 @@ export class SidenavComponent implements OnInit {
   beerSubscription: Subscription;
   categories;
   config;
+  //temp data
   items = [
     {
-      name: 'category 1',
+      name: 'British Origin Ales',
       id: 1
     },
     {
-      name: 'category 2',
+      name: 'Irish Origin Ales',
       id: 2
     },
     {
-      name: 'category 3',
+      name: 'German Origin Ales',
       id: 3
     },
     {
-      name: 'category 4',
+      name: 'International Ale Styles',
       id: 4
     },
     {
-      name: 'category 5',
+      name: 'Other Lager',
       id: 5
     },
   ]
@@ -51,15 +52,21 @@ export class SidenavComponent implements OnInit {
     this.config.duration = 5000;
     this.config.horizontalPosition = 'center';
     this.config.verticalPosition = 'bottom';
+
+    //this.getCategories();
   }
 
+  ngAfterViewInit() {
+    this.getCategories();
+  }
+  //service call to et categories
   getCategories() {
     this.categoriesSubscription = this._service.getCategories().subscribe(data => {
       this.categories = data;
       this.categoriesSubscription.unsubscribe()
     })
   }
-
+  //on category click
   categorySelected(event, id) {
     this.beerSubscription = this._service.getBeers(id).subscribe(data => {
       this.categoriesSubscription.unsubscribe()

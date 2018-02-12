@@ -1,3 +1,8 @@
-<p>
-  beer-details works!
-</p>
+<mat-card>
+  <img src="https://s3.amazonaws.com/brewerydbapi/beer/iZZRvV/upload_Kzavzr-medium.png" />
+  <div>
+    <h2>{{beer.style.name}}</h2>
+    <p>{{beer.style.description}}</p>
+    <p>{{beer.style.createDate | date: 'dd.MM.yyyy'}}</p>
+  </div>
+</mat-card>

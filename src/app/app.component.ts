@@ -9,18 +9,18 @@ import { Router } from "@angular/router";
 export class AppComponent {
   title = 'Beer time';
   text = '';
-  constructor(private _router: Router){}
+  constructor(private _router: Router) { }
+  //redirects to breweries page on click
   redirect() {
     this._router.navigate(['/breweries']);
   }
+  //redirects to beers page with search parameter
   search() {
-    console.log('srch');
-    console.log(this.text)
     if (this.text != '') {
       this._router.navigate(['/beers/' + this.text])
     }
   }
-
+  //gathering data from input
   onKey(event) {
     this.text = event.target.value;
   }

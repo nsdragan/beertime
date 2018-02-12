@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   apiUrl: ' http://api.brewerydb.com/v2/',
-  apiKey: '?key=24c374957117772e230e3cfa73f4d0ae'
+  apiKey: '?key=ee8a1a84bc76fd7d7ae6dd0dc45583e3'
 };

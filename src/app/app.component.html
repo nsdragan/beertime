@@ -1,12 +1,10 @@
 <nav>
-  <h2>Beer time</h2>
+  <img style="width:30px; height:30px" src="https://www.irunonbeer.com/wp-content/uploads/2016/03/IRUNONBEER1-1.png"/>
   <button mat-button (click)="redirect()">Breweries</button>
-  <div>
     <mat-form-field>
       <input matInput placeholder="Search for beer..." (keyup)="onKey($event)">
     </mat-form-field>
     <mat-icon style="cursor:pointer" (click)="search()">search</mat-icon>
-  </div>
 </nav>
 
 <mat-sidenav-container class="sidenavContainer">

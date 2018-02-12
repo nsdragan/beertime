@@ -16,7 +16,7 @@
   width: 240px;
 }
 
-/deep/ app-breweries, /deep/ app-beers {
+/deep/ app-breweries, /deep/ app-beers, /deep/ app-beer-details {
   width: 90%;
   min-width: 90%;
 }

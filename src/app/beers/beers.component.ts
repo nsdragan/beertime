@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BreweryService } from '../services/brewery.service';
 import { Subscription } from "rxjs/Subscription";
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatTableDataSource, MatSort } from '@angular/material';
 import { ViewContainerRef } from '@angular/core';
 
 @Component({
@@ -11,9 +11,9 @@ import { ViewContainerRef } from '@angular/core';
   styleUrls: ['./beers.component.css']
 })
 export class BeersComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'description', 'year'];
-  dataSource = ELEMENT_DATA;
-
+  displayedColumns = ['name', 'category', 'description', 'availability'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  @ViewChild(MatSort) sort: MatSort;
   beers;
   text;
   errorReceived;
@@ -25,25 +25,29 @@ export class BeersComponent implements OnInit {
     private _service: BreweryService,
     private _snackbar: MatSnackBar,
     public viewContainerRef: ViewContainerRef,
-    private activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router
   ) { }
 
   ngOnInit() {
+    //subscribe to error emitter
     this._service.errorEmitter.subscribe(error => {
       this.errorHandler(error);
     })
 
     this._service.beersEmitter.subscribe(data => {
+      //set data from service
       this.beers = data;
     })
 
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this._activatedRoute.params.subscribe((params: Params) => {
+      //get parameter value from url
       this.text = params['search'];
       if (this.text) {
         this.getBeers();
       }
     });
-
+    //configure material snack
     this.config = new MatSnackBarConfig();
     this.config.duration = 5000;
     this.config.horizontalPosition = 'center';
@@ -51,41 +55,13 @@ export class BeersComponent implements OnInit {
 
     //this.getBeers();
 
-    //temporary data
-    this.beers = [
-      {
-        name: 'name 1',
-        category: 'category 1',
-        description: 'description',
-        availability: 'available 1'
-      },
-      {
-        name: 'name 12',
-        category: 'category 2',
-        description: 'description 2',
-        availability: 'available 2'
-      },
-      {
-        name: 'name 3',
-        category: 'category 3',
-        description: 'description 3',
-        availability: 'available 3'
-      },
-      {
-        name: 'name 4',
-        category: 'category 4',
-        description: 'description 4',
-        availability: 'available 4'
-      },
-      {
-        name: 'name 5',
-        category: 'category 5',
-        description: 'description 5',
-        availability: 'available 5'
-      }
-    ]
   }
 
+  ngAfterViewInit() {
+    //table sort
+    this.dataSource.sort = this.sort;
+  }
+  //call service to get data
   getBeers() {
     this.beersSubscription = this._service.getBeers(this.text).subscribe(data => {
       this.beers = data;
@@ -96,20 +72,49 @@ export class BeersComponent implements OnInit {
   errorHandler(msg) {
     this._snackbar.open(msg, 'Ok', this.config);
   }
+  //redirect to details page
+  redirect() {
+    this._router.navigate(['/beerdetails'])
+  }
 }
-
-
 
 export interface Element {
   name: string;
-  position: number;
+  category: string;
   description: string;
-  year: number;
+  availability: string;
 }
-
+//temp data
 const ELEMENT_DATA: Element[] = [
 
-  { position: 1, name: 'Beer 1', description: 'description 1', year: 2018 },
-  { position: 2, name: 'Beer 2', description: 'description 2', year: 2018 },
-  { position: 3, name: 'Beer 3', description: 'description 3', year: 2017 }
+  {
+    name: 'Imperial IPA 2',
+    category: 'British Origin Ales',
+    description: "Hop Heads this one's for you!",
+    availability: 'Available'
+  },
+  {
+    name: 'Baltic-Style Porter',
+    category: 'Other Lager',
+    description: 'A robust porter style ale with a twist.',
+    availability: 'Available'
+  },
+  {
+    name: 'Double Brown',
+    category: 'North American Origin Ales',
+    description: 'Caramel. Walnut. Toast. Luxury.',
+    availability: 'Available'
+  },
+  {
+    name: 'American-Style Pale Ale',
+    category: 'North American Origin Ales',
+    description: 'American pale ales range from deep golden to copper',
+    availability: 'Available'
+  },
+  {
+    name: 'Golden Lager',
+    category: 'Lager',
+    description: 'Golden or Blonde ales are straw to golden blonde',
+    availability: 'Available'
+  }
 ];
